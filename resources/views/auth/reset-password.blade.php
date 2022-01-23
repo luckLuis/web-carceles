@@ -1,48 +1,72 @@
-<x-guest-layout>
-    <x-auth-card>
-        <x-slot name="logo">
-            <a href="/">
-                <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
-            </a>
-        </x-slot>
+@php
+    /*Colors for this view*/
+    $primary = "purple";
+    $secondary = "yellow";
+@endphp
 
-        <!-- Validation Errors -->
-        <x-auth-validation-errors class="mb-4" :errors="$errors" />
+<x-auth-layout
+    :primaryColor="$primary"
+    :secondaryColor="$secondary"
+    reversColumns=1
+>
 
-        <form method="POST" action="{{ route('password.update') }}">
+    <!--Login Info-->
+    <x-slot name="formTitle">{{"Reset Password"}}</x-slot>
+
+    <x-slot name="formDescription">{{"Now you can change your password, make sure it is secure."}}</x-slot>
+
+
+    <!--Reset Password  Form-->
+    <x-slot name="authForm">
+        
+        <form method="POST" action="{{ route('password.update') }}" class="space-y-6">
             @csrf
 
             <!-- Password Reset Token -->
             <input type="hidden" name="token" value="{{ $request->route('token') }}">
 
-            <!-- Email Address -->
-            <div>
-                <x-label for="email" :value="__('Email')" />
-
-                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email', $request->email)" required autofocus />
-            </div>
+            <!--Email-->
+            <x-input type="hidden"
+                     name="email"
+                     :value="$request->email"
+                     required/>
 
             <!-- Password -->
-            <div class="mt-4">
-                <x-label for="password" :value="__('Password')" />
+            <div>
+                <x-label for="password"
+                         :value="__('Password')"/>
 
-                <x-input id="password" class="block mt-1 w-full" type="password" name="password" required />
+                <x-input id="password"
+                         class="block mt-2 w-full"
+                         :focus-color="$primary"
+                         type="password"
+                         name="password"
+                         placeholder="Enter your new password"
+                         required
+                         autofocus/>
             </div>
 
             <!-- Confirm Password -->
             <div class="mt-4">
-                <x-label for="password_confirmation" :value="__('Confirm Password')" />
+                <x-label for="password_confirmation"
+                         :value="__('Confirm Password')"/>
 
-                <x-input id="password_confirmation" class="block mt-1 w-full"
-                                    type="password"
-                                    name="password_confirmation" required />
+                <x-input id="password_confirmation"
+                         class="block mt-2 w-full"
+                         :focus-color="$primary"
+                         type="password"
+                         name="password_confirmation"
+                         placeholder="Enter your new password again"
+                         required/>
             </div>
 
-            <div class="flex items-center justify-end mt-4">
-                <x-button>
-                    {{ __('Reset Password') }}
+            <div class="mt-4 flex justify-center">
+                <x-button class="w-3/5"
+                          :primary-color="$primary"
+                          :secondary-color="$secondary">
+                    {{ __('Reset') }}
                 </x-button>
             </div>
         </form>
-    </x-auth-card>
-</x-guest-layout>
+    </x-slot>
+</x-auth-layout>

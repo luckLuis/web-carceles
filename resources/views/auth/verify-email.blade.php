@@ -1,39 +1,46 @@
-<x-guest-layout>
-    <x-auth-card>
-        <x-slot name="logo">
-            <a href="/">
-                <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
-            </a>
-        </x-slot>
+@php
+    /*Colors for this view*/
+    $primary = "green";
+    $secondary = "gray";
+@endphp
 
-        <div class="mb-4 text-sm text-gray-600">
-            {{ __('Thanks for signing up! Before getting started, could you verify your email address by clicking on the link we just emailed to you? If you didn\'t receive the email, we will gladly send you another.') }}
-        </div>
 
-        @if (session('status') == 'verification-link-sent')
-            <div class="mb-4 font-medium text-sm text-green-600">
-                {{ __('A new verification link has been sent to the email address you provided during registration.') }}
-            </div>
-        @endif
+<x-auth-layout
+    :primaryColor="$primary"
+    :secondaryColor="$secondary"
+    reversColumns=1
+>
 
-        <div class="mt-4 flex items-center justify-between">
-            <form method="POST" action="{{ route('verification.send') }}">
+    <!--Login Info-->
+    <x-slot name="formTitle">{{"Email Verification"}}</x-slot>
+
+    <x-slot name="formDescription">{{'Thanks for signing up! Before getting started, could you verify your email address by clicking on the link we just emailed to you? If you didn\'t receive the email, we will gladly send you another.'}}</x-slot>
+
+    
+    <!--Forgot Password  Form-->
+    <x-slot name="authForm">
+        <div class="flex justify-between content-center mt-4 space-x-4">
+            <form method="POST" action="{{ route('verification.send') }}" class="w-1/2">
                 @csrf
-
-                <div>
-                    <x-button>
-                        {{ __('Resend Verification Email') }}
+                <div class="flex justify-center">
+                    <x-button class="w-full"
+                              :primary-color="$primary"
+                              :secondary-color="$secondary">
+                        {{ __('Resend link') }}
                     </x-button>
                 </div>
             </form>
 
-            <form method="POST" action="{{ route('logout') }}">
+            <form method="POST" action="{{ route('logout') }}" class="w-1/2">
                 @csrf
-
-                <button type="submit" class="underline text-sm text-gray-600 hover:text-gray-900">
-                    {{ __('Log Out') }}
-                </button>
+                <div class="flex justify-center">
+                    <x-button class="w-full"
+                              primary-color="red"
+                              secondary-color="pink">
+                        {{ __('Log out') }}
+                    </x-button>
+                </div>
             </form>
         </div>
-    </x-auth-card>
-</x-guest-layout>
+    </x-slot>
+</x-auth-layout>

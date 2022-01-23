@@ -1,36 +1,60 @@
-<x-guest-layout>
-    <x-auth-card>
-        <x-slot name="logo">
-            <a href="/">
-                <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
-            </a>
-        </x-slot>
+@php
+    /*Colors for this view*/
+    $primary = "indigo";
+    $secondary = "pink";
+@endphp
 
-        <div class="mb-4 text-sm text-gray-600">
-            {{ __('Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.') }}
-        </div>
+<x-auth-layout
+    :primaryColor="$primary"
+    :secondaryColor="$secondary"
+    reversColumns=1
+>
 
-        <!-- Session Status -->
-        <x-auth-session-status class="mb-4" :status="session('status')" />
+    <!--Login Info-->
+    <x-slot name="formTitle">{{"Forgot Password"}}</x-slot>
 
-        <!-- Validation Errors -->
-        <x-auth-validation-errors class="mb-4" :errors="$errors" />
+    <x-slot name="formDescription">{{"Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one."}}</x-slot>
 
-        <form method="POST" action="{{ route('password.email') }}">
+
+    <!--Forgot Password  Form-->
+    <x-slot name="authForm">
+        
+        <form method="POST" action="{{ route('password.email') }}" class="space-y-6">
             @csrf
-
-            <!-- Email Address -->
+            <!--Email-->
             <div>
-                <x-label for="email" :value="__('Email')" />
+                <x-label for="email"
+                         :value="__('Email address')"/>
 
-                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus />
+                <x-input id="email"
+                         class="block mt-2 w-full"
+                         :focus-color="$primary"
+                         type="email"
+                         name="email"
+                         :value="old('email')"
+                         placeholder="Enter your email"
+                         required
+                         autofocus/>
             </div>
 
-            <div class="flex items-center justify-end mt-4">
-                <x-button>
-                    {{ __('Email Password Reset Link') }}
+            <div class="mt-4 flex justify-center">
+                <x-button class="w-3/5"
+                          :primary-color="$primary"
+                          :secondary-color="$secondary">
+                    {{ __('Request link') }}
                 </x-button>
             </div>
+
+            <div class="mt-4 flex flex-col items-center justify-center text-md text-gray-500">
+                <!--Sign In-->
+                <span>{{"Already have an account?"}}</span>
+                <x-link href="{{route('login')}}"
+                        class="text-base font-semibold"
+                        :color="$primary"
+                        :hover="$secondary">
+                    {{ __('Sign in') }}
+                </x-link>
+            </div>
         </form>
-    </x-auth-card>
-</x-guest-layout>
+    </x-slot>
+</x-auth-layout>
