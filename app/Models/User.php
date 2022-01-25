@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Traits\HasImage;
+use Carbon\Carbon;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -10,7 +12,7 @@ use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable,HasImage;
 
     protected $fillable = [
         'role_id',
@@ -24,7 +26,6 @@ class User extends Authenticatable implements MustVerifyEmail
         'email',
         'birthdate',
     ];
-
 
     protected $hidden = [
         'password',
@@ -71,5 +72,13 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
 
+    public function getFullName(): string
+    {
+        return "$this->first_name $this->last_name";
+    }
 
+    public function getBirthdateAttribute($value): ?string
+    {
+        return isset($value) ? Carbon::parse($value)->format('d/m/Y') : null;
+    }
 }
