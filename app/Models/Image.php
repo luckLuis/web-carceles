@@ -9,6 +9,11 @@ use Illuminate\Support\Str;
 
 class Image extends Model
 {
+
+    protected $fillable = [
+        'path',
+    ];
+
     use HasFactory;
 
 
