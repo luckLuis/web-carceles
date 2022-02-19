@@ -11,6 +11,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Support\Str;
 
+
 class User extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens, HasFactory, Notifiable,HasImage;
@@ -114,6 +115,7 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->role->name === $role;
     }
+
 
 
 }

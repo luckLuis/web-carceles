@@ -3,6 +3,8 @@
 namespace App\Http\Requests\Auth;
 
 use Illuminate\Auth\Events\Lockout;
+use App\Models\Role;
+use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\RateLimiter;
@@ -45,18 +47,43 @@ class LoginRequest extends FormRequest
     {
         $this->ensureIsNotRateLimited();
 
+         // Obtener el rol prisionero
+        // $prisioner_role = Role::where('name', 'prisoner')->first();
+
+
+         // Obtener todos los emails de los  usuarios que sean prisioneros
+         //$prisioners = $prisioner_role->users()->pluck('email');
+
+         // Obtener todos los nicks de los  usuarios que sean prisioneros
+         //$prisioners_username = $prisioner_role->users()->pluck('username');
+
+         
+
+         //dd($prisioners->all());
+         //dd($this->input('login_field'));
+         //dd(in_array($this->input('login_field'), $prisioners->all()));
+
+
         $email_exist = Auth::attempt(['email' => $this->input('login_field'), 'password' => $this->input('password')], $this->boolean('remember'));
+
 
         $username_exist = Auth::attempt(['username' => $this->input('login_field'), 'password' => $this->input('password')], $this->boolean('remember'));
 
-        if (!$email_exist || !$username_exist)
+        //dd(!$email_exist || !$username_exist || in_array($this->input('login_field'), $prisioners->all()));
+
+
+        if (!$email_exist  &&  !$username_exist)
         {
+           
+            //if(in_array($this->input('login_field'), $prisioners->all()) || in_array($this->input('login_field'), $prisioners_username->all())){
+              //  return abort(403, 'This action is unauthorized.');
+            //}
             RateLimiter::hit($this->throttleKey());
             throw ValidationException::withMessages([
                 'email' => __('auth.failed'),
             ]);
-        }
 
+        }
         RateLimiter::clear($this->throttleKey());
     }
 
