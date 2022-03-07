@@ -75,7 +75,7 @@
               &copy; Copyright <strong>2022 </strong>All Rights Reserved
             </p>
             <div class="credits">
-              Designed by <a href="https://github.com/MarlonAdrian">Grupo N°3 - EPN</a>
+              Designed by <a href="https://github.com/Roblink-21/ProyectoWeb_Carcel_Grupo3/tree/sprint7">Grupo N°3 - EPN</a>
             </div>
           </div>
 
