@@ -6,9 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Resources\UserResource;
 use Illuminate\Http\Request;
+use App\Models\User;
 
 class AuthController extends Controller
 {
+    
     //Funcion para realizar login
     public function login(LoginRequest $request)
     {
@@ -25,10 +27,15 @@ class AuthController extends Controller
         ], 201);
     }
 
+    public function index()
+    {
+        return User::all();
+    }
+
     public function logout(Request $request): array
     {
         // https://laravel.com/docs/8.x/queries#delete-statements
-        $request->user()->tokens()->delete();
+        $request->user()->tokens->delete();
 
         return [
             'message' => 'Logged out'

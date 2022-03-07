@@ -162,8 +162,7 @@ class DirectorController extends Controller
 
         return back()->with('status', 'Director updated successfully');
     }
-
-
+    
     public function destroy(User $user)
     {
         $director = $user;

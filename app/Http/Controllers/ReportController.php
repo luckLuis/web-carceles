@@ -59,7 +59,7 @@ class ReportController extends Controller
 
         if ($request->has('image'))
         {
-            $report->storeImage($request['image'], 'reports');
+            $report->storeImage($request['image'], 'reports', 'images');
         }
         return back()->with('status', 'Report created successfully');
     }
@@ -91,7 +91,7 @@ class ReportController extends Controller
 
         if ($request->has('image'))
         {
-            $report->updateImage($request['image'], 'reports');
+            $report->updateImage($request['image'], 'reports', 'images');
         }
 
         return back()->with('status', 'Report updated successfully');

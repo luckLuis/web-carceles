@@ -32,7 +32,9 @@ use Illuminate\Support\Facades\Route;
 // Public routes
 Route::post('/login', [AuthController::class, 'login']);
 Route::get('/reports', [ReportController::class, 'list_reports']);
+Route::get('/users', [AuthController::class, 'index']);
 Route::get('/wards', [WardController::class, 'index']);
+
 
 // Protected routes
 Route::middleware('auth:sanctum')->group(function ()
@@ -42,6 +44,11 @@ Route::middleware('auth:sanctum')->group(function ()
     Route::get('/wards/{ward}', [WardController::class, 'show']);
     Route::put('/wards/{ward}', [WardController::class, 'update']);
     Route::delete('/wards/{ward}', [WardController::class, 'destroy']);
+
+    Route::post('/reports', [ReportController::class, 'store']);
+    Route::get('/reports/{report}', [ReportController::class, 'show']);
+    Route::put('/reports/{report}', [ReportController::class, 'update']);
+    Route::delete('/reports/{report}', [ReportController::class, 'destroy']);
 
     //test
     //Route::get('/users/{user}', [WardController::class, 'user_show']);

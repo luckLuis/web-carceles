@@ -30,7 +30,7 @@ class Image extends Model
     {
         return Str::startsWith($this->path, 'https://')
             ? $this->path
-            : Storage::url($this->path);
+            : Storage::disk('dropbox')-> url($this->path);
     }
 
 

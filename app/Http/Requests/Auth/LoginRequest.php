@@ -74,6 +74,7 @@ class LoginRequest extends FormRequest
 
         if (!$email_exist  &&  !$username_exist)
         {
+            
            
             //if(in_array($this->input('login_field'), $prisioners->all()) || in_array($this->input('login_field'), $prisioners_username->all())){
               //  return abort(403, 'This action is unauthorized.');
@@ -84,6 +85,13 @@ class LoginRequest extends FormRequest
             ]);
 
         }
+        if (auth()->user()->role_id == "4") {
+            Auth::logout();
+            throw ValidationException::withMessages([
+                'email' => __('auth.not_allowed'),
+            ]);
+        }
+
         RateLimiter::clear($this->throttleKey());
     }
 
